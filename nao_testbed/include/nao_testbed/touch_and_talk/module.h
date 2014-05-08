@@ -31,19 +31,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <nao_utilities/nao_speech.h>
 #include <nao_utilities/nao_bumpers.h>
 
-class Module : public ros_nao_utils::Bumpers
+class Module : 
+  public ros_nao_utils::Bumpers,
+  public ros_nao_utils::Speech
 {
   private:
     
     ros::NodeHandle nh_;
     
-    ros_nao_utils::Speech speech_utility;
-    
   public:
     
     Module(void);
     
-    void bumper_callback(const nao_msgs::Bumper& msg);
+    virtual void bumper_callback(const nao_msgs::Bumper& msg);
   
 };
 

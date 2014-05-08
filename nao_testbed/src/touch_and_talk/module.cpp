@@ -27,19 +27,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "nao_testbed/touch_and_talk/module.h"
 
-Module::Module(void):
-  speech_utility(nh_)
+Module::Module(void)
 {
-  this->bumpers_subscribe(nh_);
 }
 
 void Module::bumper_callback(const nao_msgs::Bumper& msg)
 {
-  
   std::string foot = msg.bumper == 0 ? "right" : "left";
   foot += "foot touched";
   if(msg.state == 1)
   {
-    speech_utility.speak(foot);
+    speak(foot);
   }
 }

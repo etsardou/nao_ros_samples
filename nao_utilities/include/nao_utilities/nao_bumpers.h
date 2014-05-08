@@ -41,12 +41,12 @@ namespace ros_nao_utils
     protected:
     
       ros::Subscriber bumpers_sub_;
+      
+      //! @brief Default constructor 
+      Bumpers(void);
     
     public:
-    
-      //! @brief Default constructor 
-      void bumpers_subscribe(ros::NodeHandle& nh_);
-      
+
       //! @brief Pure virtual callback for the bumpers event
       virtual void bumper_callback(const nao_msgs::Bumper& msg) = 0;
   };

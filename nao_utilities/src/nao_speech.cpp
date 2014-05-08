@@ -30,8 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace ros_nao_utils
 {
   //! @brief Default constructor
-  Speech::Speech(ros::NodeHandle& nh_)
+  Speech::Speech(void)
   {
+    ros::NodeHandle nh_;
     //~ Subscription to /speech
     speak_pub_ = nh_.advertise<std_msgs::String>("speech",5);
   }

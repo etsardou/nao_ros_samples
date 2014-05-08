@@ -29,14 +29,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace ros_nao_utils
 {
-  //! @brief Default constructor
-  void Bumpers::bumpers_subscribe(ros::NodeHandle& nh_)
+  //! @brief 
+  Bumpers::Bumpers(void)
   {
     //~ Subscription to /bumper
+    ros::NodeHandle nh_;
+    
     bumpers_sub_ = nh_.subscribe(
       "bumper", 
       1, 
       &Bumpers::bumper_callback,
       this);
   }
+
 }

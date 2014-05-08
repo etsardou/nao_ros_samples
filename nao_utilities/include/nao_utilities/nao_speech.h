@@ -45,7 +45,7 @@ namespace ros_nao_utils
     public:
     
       //! @brief Default constructor 
-      Speech(ros::NodeHandle& nh_);
+      Speech(void);
       
       //! @brief Makes NAO say the input sentence
       void speak(std::string s);
