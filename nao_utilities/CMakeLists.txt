@@ -9,7 +9,7 @@ find_package(catkin
     nao_msgs
 )
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 #include directories for this package
 include_directories(  
@@ -31,6 +31,7 @@ catkin_package(
 #-----------------------------UTILITIES LIB---------------------------------#
 add_library(nao_utilities_lib 
   src/nao_speech.cpp
+  src/nao_bumpers.cpp
 )
 
 add_dependencies(nao_utilities_lib 

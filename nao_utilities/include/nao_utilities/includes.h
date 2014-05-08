@@ -30,4 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ros/ros.h"
 
+#include "std_msgs/String.h"
+#include "nao_msgs/Bumper.h"
+
 #endif

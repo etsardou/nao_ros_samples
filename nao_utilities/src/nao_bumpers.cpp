@@ -25,10 +25,18 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <nao_utilities/nao_speech.h>
+#include "nao_utilities/nao_bumpers.h"
 
-int main(void)
+namespace ros_nao_utils
 {
-  ros_nao_utils::Speech a;
-  return 0;
+  //! @brief Default constructor
+  void Bumpers::bumpers_subscribe(ros::NodeHandle& nh_)
+  {
+    //~ Subscription to /bumper
+    bumpers_sub_ = nh_.subscribe(
+      "bumper", 
+      1, 
+      &Bumpers::bumper_callback,
+      this);
+  }
 }

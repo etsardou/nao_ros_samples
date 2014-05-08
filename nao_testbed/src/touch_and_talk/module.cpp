@@ -25,31 +25,21 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_SPEECH_WRAPPER
-#define ROS_NAO_SPEECH_WRAPPER
+#include "nao_testbed/touch_and_talk/module.h"
 
-#include "nao_utilities/includes.h"
-
-//! @namespace ros_nao_utils
-//! @brief Namespace for the ROS NAO wrappers
-namespace ros_nao_utils
+Module::Module(void):
+  speech_utility(nh_)
 {
-  //! @class Speech
-  //! @brief Wrapper for NAO's speech module 
-  class Speech
-  {
-    private:
-    
-      ros::Publisher speak_pub_;
-    
-    public:
-    
-      //! @brief Default constructor 
-      Speech(ros::NodeHandle& nh_);
-      
-      //! @brief Makes NAO say the input sentence
-      void speak(std::string s);
-  };
+  this->bumpers_subscribe(nh_);
 }
-//~ 
-#endif
+
+void Module::bumper_callback(const nao_msgs::Bumper& msg)
+{
+  
+  std::string foot = msg.bumper == 0 ? "right" : "left";
+  foot += "foot touched";
+  if(msg.state == 1)
+  {
+    speech_utility.speak(foot);
+  }
+}

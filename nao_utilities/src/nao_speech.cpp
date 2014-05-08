@@ -30,14 +30,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace ros_nao_utils
 {
   //! @brief Default constructor
-  Speech::Speech(void)
+  Speech::Speech(ros::NodeHandle& nh_)
   {
-    
+    //~ Subscription to /speech
+    speak_pub_ = nh_.advertise<std_msgs::String>("speech",5);
   }
   
   //! @brief Makes NAO say the input sentence
   void Speech::speak(std::string s)
   {
-    
+    std_msgs::String msg;
+    msg.data = s;
+    if(!speak_pub_)
+    {
+      ROS_ERROR("Speech publisher is not operating");
+      return;
+    }
+    speak_pub_.publish(msg);
   }
 }

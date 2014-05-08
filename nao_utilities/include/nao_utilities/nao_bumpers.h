@@ -25,8 +25,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_SPEECH_WRAPPER
-#define ROS_NAO_SPEECH_WRAPPER
+#ifndef ROS_NAO_BUMPERS_WRAPPER
+#define ROS_NAO_BUMPERS_WRAPPER
 
 #include "nao_utilities/includes.h"
 
@@ -34,21 +34,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //! @brief Namespace for the ROS NAO wrappers
 namespace ros_nao_utils
 {
-  //! @class Speech
-  //! @brief Wrapper for NAO's speech module 
-  class Speech
+  //! @class Bumpers
+  //! @brief Wrapper for NAO's bumpers module 
+  class Bumpers
   {
-    private:
+    protected:
     
-      ros::Publisher speak_pub_;
+      ros::Subscriber bumpers_sub_;
     
     public:
     
       //! @brief Default constructor 
-      Speech(ros::NodeHandle& nh_);
+      void bumpers_subscribe(ros::NodeHandle& nh_);
       
-      //! @brief Makes NAO say the input sentence
-      void speak(std::string s);
+      //! @brief Pure virtual callback for the bumpers event
+      virtual void bumper_callback(const nao_msgs::Bumper& msg) = 0;
   };
 }
 //~ 
