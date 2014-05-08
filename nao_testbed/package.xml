@@ -1,9 +1,9 @@
 <package>
-  <name>nao_utilities</name>
+  <name>nao_testbed</name>
   <version>0.0.1</version>
   
   <description>
-      Utilities and wrappers for using ROS with NAO.
+      Showcases the use of NAO ROS utilities
   </description>
   
   <maintainer email="etsardou@gmail.com">Tsardoulias Manos</maintainer>
@@ -13,16 +13,9 @@
 
   <build_depend>roscpp</build_depend>
   <build_depend>actionlib</build_depend>
-  <build_depend>nao_msgs</build_depend>
+  <build_depend>nao_utilities</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>actionlib</run_depend>
-  <run_depend>nao_msgs</run_depend>
-
-  <run_depend>nao_description</run_depend>
-  <run_depend>nao_driver</run_depend>
-  <run_depend>nao_pose</run_depend>
-  <run_depend>robot_state_publisher</run_depend>
-  <run_depend>diagnostic_aggregator</run_depend>
-
+  <run_depend>nao_utilities</run_depend>
 </package>
