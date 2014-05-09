@@ -35,11 +35,24 @@ namespace ros_nao_utils
     //~ Subscription to /bumper
     ros::NodeHandle nh_;
     
+    bumper_lock = false;
+    tactile_lock = false;
+    
     bumpers_sub_ = nh_.subscribe(
       "bumper", 
       1, 
       &Bumpers::bumper_callback,
       this);
+      
+    tactile_sub_ = nh_.subscribe(
+      "tactile_touch", 
+      1, 
+      &Bumpers::tactile_callback,
+      this);
   }
+  
+  void Bumpers::bumper_callback(const nao_msgs::Bumper& msg){}
+  
+  void Bumpers::tactile_callback(const nao_msgs::TactileTouch& msg){}
 
 }

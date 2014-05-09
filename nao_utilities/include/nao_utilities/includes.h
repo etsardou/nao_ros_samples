@@ -32,5 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "std_msgs/String.h"
 #include "nao_msgs/Bumper.h"
+#include "nao_msgs/TactileTouch.h"
 
 #endif

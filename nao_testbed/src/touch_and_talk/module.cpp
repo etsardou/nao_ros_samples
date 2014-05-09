@@ -33,10 +33,50 @@ Module::Module(void)
 
 void Module::bumper_callback(const nao_msgs::Bumper& msg)
 {
+  if(bumper_lock)
+  {
+    return;
+  }
+  bumper_lock = true;
+  
   std::string foot = msg.bumper == 0 ? "right" : "left";
-  foot += "foot touched";
+  foot += " foot touched";
   if(msg.state == 1)
   {
     speak(foot);
   }
+  
+  bumper_lock = false;
+}
+
+void Module::tactile_callback(const nao_msgs::TactileTouch& msg)
+{
+  if(tactile_lock)
+  {
+    return;
+  }
+  if(msg.state == 0)
+  {
+    return;
+  }
+  
+  tactile_lock = true;
+  
+  std::string word = "";
+  switch(msg.button)
+  {
+    case 1: 
+      word = "front";
+      break;
+    case 2:
+      word = "middle";
+      break;
+    case 3:
+      word = "back";
+      break;
+  }
+
+  speak(word + std::string(" tactile touched"));
+  
+  tactile_lock = false;
 }

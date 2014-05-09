@@ -41,14 +41,21 @@ namespace ros_nao_utils
     protected:
     
       ros::Subscriber bumpers_sub_;
+      ros::Subscriber tactile_sub_;
+      
+      bool bumper_lock;
+      bool tactile_lock;
       
       //! @brief Default constructor 
       Bumpers(void);
     
     public:
 
-      //! @brief Pure virtual callback for the bumpers event
-      virtual void bumper_callback(const nao_msgs::Bumper& msg) = 0;
+      //! @brief Virtual callback for the bumpers event
+      virtual void bumper_callback(const nao_msgs::Bumper& msg);
+      
+      //! @brief Virtual callback for the bumpers event
+      virtual void tactile_callback(const nao_msgs::TactileTouch& msg);
   };
 }
 //~ 
