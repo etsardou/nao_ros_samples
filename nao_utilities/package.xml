@@ -14,10 +14,14 @@
   <build_depend>roscpp</build_depend>
   <build_depend>actionlib</build_depend>
   <build_depend>nao_msgs</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <build_depend>nao_driver</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>actionlib</run_depend>
   <run_depend>nao_msgs</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>nao_driver</run_depend>
 
   <run_depend>nao_description</run_depend>
   <run_depend>nao_driver</run_depend>

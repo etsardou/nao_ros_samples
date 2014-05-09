@@ -25,16 +25,58 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#include "nao_testbed/vocal_commands_posture_change/module.h"
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
-
-#include "std_msgs/String.h"
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-
-#include <nao_driver/nao_speechConfig.h>
-
-#endif
+Module::Module(void)
+{
+}
+//~ 
+//~ void Module::bumper_callback(const nao_msgs::Bumper& msg)
+//~ {
+  //~ if(bumper_lock)
+  //~ {
+    //~ return;
+  //~ }
+  //~ bumper_lock = true;
+  //~ 
+  //~ std::string foot = msg.bumper == 0 ? "right" : "left";
+  //~ foot += " foot touched";
+  //~ if(msg.state == 1)
+  //~ {
+    //~ speak(foot);
+  //~ }
+  //~ 
+  //~ bumper_lock = false;
+//~ }
+//~ 
+//~ void Module::tactile_callback(const nao_msgs::TactileTouch& msg)
+//~ {
+  //~ if(tactile_lock)
+  //~ {
+    //~ return;
+  //~ }
+  //~ if(msg.state == 0)
+  //~ {
+    //~ return;
+  //~ }
+  //~ 
+  //~ tactile_lock = true;
+  //~ 
+  //~ std::string word = "";
+  //~ switch(msg.button)
+  //~ {
+    //~ case 1: 
+      //~ word = "front";
+      //~ break;
+    //~ case 2:
+      //~ word = "middle";
+      //~ break;
+    //~ case 3:
+      //~ word = "back";
+      //~ break;
+  //~ }
+//~ 
+  //~ speak(word + std::string(" tactile touched"));
+  //~ 
+  //~ tactile_lock = false;
+//~ }

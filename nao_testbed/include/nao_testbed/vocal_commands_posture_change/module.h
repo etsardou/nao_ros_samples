@@ -25,16 +25,27 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#ifndef NAO_TESTBED_VOCAL_COMMANDS_POSTURE_CHANGE_MODULE
+#define NAO_TESTBED_VOCAL_COMMANDS_POSTURE_CHANGE_MODULE
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
+#include <nao_utilities/nao_speech.h>
+#include <nao_utilities/nao_bumpers.h>
 
-#include "std_msgs/String.h"
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-
-#include <nao_driver/nao_speechConfig.h>
+class Module : 
+  public ros_nao_utils::Bumpers,
+  public ros_nao_utils::Speech
+{
+  private:
+    
+    ros::NodeHandle nh_;
+    
+  public:
+    
+    Module(void);
+    //~ 
+    //~ virtual void bumper_callback(const nao_msgs::Bumper& msg);
+    //~ virtual void tactile_callback(const nao_msgs::TactileTouch& msg);
+  //~ 
+};
 
 #endif

@@ -37,3 +37,16 @@ target_link_libraries(nao_testbed_touch_and_talk
   ${catkin_LIBRARIES}
   nao_utilities_lib 
 )
+#---------------------Change posture by vocal commands------------------------#
+add_executable(nao_testbed_vocal_commands_change_posture
+  src/vocal_commands_posture_change/main.cpp
+  src/vocal_commands_posture_change/module.cpp
+)
+add_dependencies(nao_testbed_vocal_commands_change_posture 
+  nao_msgs_gencpp # wait for nao_msgs to be build
+  nao_utilities_gencpp # wait for nao_utilities to be build
+) 
+target_link_libraries(nao_testbed_vocal_commands_change_posture 
+  ${catkin_LIBRARIES}
+  nao_utilities_lib 
+)

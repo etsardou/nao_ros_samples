@@ -25,16 +25,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#include "nao_testbed/vocal_commands_posture_change/module.h"
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "vocal_commands_posture_change");
 
-#include "std_msgs/String.h"
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
+  Module m;
 
-#include <nao_driver/nao_speechConfig.h>
-
-#endif
+  ros::spin();
+  return 0;
+}

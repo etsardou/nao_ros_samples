@@ -41,6 +41,10 @@ namespace ros_nao_utils
     private:
     
       ros::Publisher speak_pub_;
+      
+      //!< The dynamic reconfigure parameters' server
+      dynamic_reconfigure::Server
+        <nao_driver::nao_speechConfig> server;
     
     public:
     
