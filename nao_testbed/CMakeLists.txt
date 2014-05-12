@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(nao_testbed)
-find_package(catkin REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -34,6 +33,19 @@ add_dependencies(nao_testbed_touch_and_talk
   nao_utilities_gencpp # wait for nao_utilities to be build
 ) 
 target_link_libraries(nao_testbed_touch_and_talk 
+  ${catkin_LIBRARIES}
+  nao_utilities_lib 
+)
+#----------------------------------Track face----------------------------------#
+add_executable(nao_testbed_track_face
+  src/track_face/main.cpp
+  src/track_face/module.cpp
+)
+add_dependencies(nao_testbed_track_face 
+  nao_msgs_gencpp # wait for nao_msgs to be build
+  nao_utilities_gencpp # wait for nao_utilities to be build
+) 
+target_link_libraries(nao_testbed_track_face 
   ${catkin_LIBRARIES}
   nao_utilities_lib 
 )

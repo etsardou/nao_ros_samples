@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- Use CPP node by default for nao_sensors -->
+  <arg name="force_python" default="true" />
+  <arg name="nao_ip" default="$(optenv NAO_IP 192.168.0.103)" />
+  <arg name="nao_port" default="$(optenv NAO_PORT 9559)" />
+
+  <include file="$(find nao_wakeup)/nao_full.launch">
+    <arg name="nao_ip" value="$(arg nao_ip)" />
+    <arg name="nao_port" value="$(arg nao_port)" />
+  </include>
+  
+  <node type="nao_testbed_track_face" pkg="nao_testbed" name="nao_testbed" output="screen"/>
+
+</launch>

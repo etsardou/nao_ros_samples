@@ -25,21 +25,46 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#ifndef ROS_NAO_JOINT_ANGLES_SPEED_WRAPPER
+#define ROS_NAO_JOINT_ANGLES_SPEED_WRAPPER
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
-#include <actionlib/client/simple_action_client.h>
+#include "nao_utilities/includes.h"
 
-#include "std_msgs/String.h"
-#include "std_srvs/Empty.h"
+//! @namespace ros_nao_utils
+//! @brief Namespace for the ROS NAO wrappers
+namespace ros_nao_utils
+{
+  
+  typedef actionlib::SimpleActionClient<nao_msgs::JointAnglesWithSpeedAction> 
+    Joint_a_c; 
+  typedef nao_msgs::JointAnglesWithSpeedGoal Joint_a_goal; 
+  
+  //! @class Bumpers
+  //! @brief Wrapper for NAO's bumpers module 
+  class MotionController
+  {
+    protected:
+    
+      Joint_a_c *act_client_;
+      
+      ros::ServiceClient stiffness_on_service_client;
+      ros::ServiceClient stiffness_off_service_client;
 
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-#include "nao_msgs/FaceDetected.h"
-#include "nao_msgs/JointAnglesWithSpeedAction.h"
+      //! @brief Default constructor 
+      MotionController(void);
+    
+    public:
 
-#include <nao_driver/nao_speechConfig.h>
-
+      //! @brief Virtual callback for the face detection event
+      void make_movement(
+        std::vector<std::string> joints,
+        std::vector<float> angles,
+        float speed,
+        bool relative
+      );
+      
+      void setStiffness(bool state);
+  };
+}
+//~ 
 #endif

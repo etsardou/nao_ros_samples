@@ -25,21 +25,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#ifndef ROS_NAO_FACE_DETECTION_WRAPPER
+#define ROS_NAO_FACE_DETECTION_WRAPPER
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
-#include <actionlib/client/simple_action_client.h>
+#include "nao_utilities/includes.h"
 
-#include "std_msgs/String.h"
-#include "std_srvs/Empty.h"
+//! @namespace ros_nao_utils
+//! @brief Namespace for the ROS NAO wrappers
+namespace ros_nao_utils
+{
+  //! @class Bumpers
+  //! @brief Wrapper for NAO's bumpers module 
+  class FaceDetection
+  {
+    protected:
+    
+      ros::Subscriber face_detection_sub_;
+      
+      bool face_detection_lock;
+      
+      //! @brief Default constructor 
+      FaceDetection(void);
+    
+    public:
 
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-#include "nao_msgs/FaceDetected.h"
-#include "nao_msgs/JointAnglesWithSpeedAction.h"
-
-#include <nao_driver/nao_speechConfig.h>
-
+      //! @brief Virtual callback for the face detection event
+      virtual void face_detection_callback(const nao_msgs::FaceDetected& msg);
+  };
+}
+//~ 
 #endif

@@ -25,21 +25,32 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#ifndef NAO_TESTBED_TRACK_FACE_MODULE
+#define NAO_TESTBED_TRACK_FACE_MODULE
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
-#include <actionlib/client/simple_action_client.h>
+#include <nao_utilities/nao_face_detection.h>
+#include <nao_utilities/nao_motion_controller.h>
+#include <nao_utilities/nao_bumpers.h>
+#include <nao_utilities/nao_speech.h>
 
-#include "std_msgs/String.h"
-#include "std_srvs/Empty.h"
-
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-#include "nao_msgs/FaceDetected.h"
-#include "nao_msgs/JointAnglesWithSpeedAction.h"
-
-#include <nao_driver/nao_speechConfig.h>
+class Module : 
+  public ros_nao_utils::FaceDetection,
+  public ros_nao_utils::MotionController,
+  public ros_nao_utils::Bumpers,
+  public ros_nao_utils::Speech
+{
+  private:
+    
+    ros::NodeHandle nh_;
+    
+  public:
+    
+    Module(void);
+    
+    virtual void face_detection_callback(const nao_msgs::FaceDetected& msg);
+    
+    virtual void tactile_callback(const nao_msgs::TactileTouch& msg);
+  
+};
 
 #endif

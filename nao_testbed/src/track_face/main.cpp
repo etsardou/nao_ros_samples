@@ -25,21 +25,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#include "nao_testbed/track_face/module.h"
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
-#include <actionlib/client/simple_action_client.h>
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "track_face");
 
-#include "std_msgs/String.h"
-#include "std_srvs/Empty.h"
+  Module m;
 
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-#include "nao_msgs/FaceDetected.h"
-#include "nao_msgs/JointAnglesWithSpeedAction.h"
-
-#include <nao_driver/nao_speechConfig.h>
-
-#endif
+  ros::spin();
+  return 0;
+}

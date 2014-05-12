@@ -36,6 +36,8 @@ catkin_package(
 add_library(nao_utilities_lib 
   src/nao_speech.cpp
   src/nao_bumpers.cpp
+  src/nao_face_detection.cpp
+  src/nao_motion_controller.cpp
 )
 
 add_dependencies(nao_utilities_lib 

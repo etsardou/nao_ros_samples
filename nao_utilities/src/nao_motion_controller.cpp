@@ -25,21 +25,63 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#include "nao_utilities/nao_motion_controller.h"
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
-#include <actionlib/client/simple_action_client.h>
-
-#include "std_msgs/String.h"
-#include "std_srvs/Empty.h"
-
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-#include "nao_msgs/FaceDetected.h"
-#include "nao_msgs/JointAnglesWithSpeedAction.h"
-
-#include <nao_driver/nao_speechConfig.h>
-
-#endif
+namespace ros_nao_utils
+{
+  //! @brief 
+  MotionController::MotionController(void)
+  {
+    
+    ros::NodeHandle nh_;
+    
+    ROS_INFO("Initializing the joint_angles action client");
+    act_client_ = new Joint_a_c("joint_angles_action", true);
+    act_client_->waitForServer();
+    ROS_INFO("Server found! joint_angles action client initialized");
+    
+    stiffness_on_service_client = nh_.serviceClient
+      <std_srvs::Empty>("body_stiffness/enable");
+    stiffness_off_service_client = nh_.serviceClient
+      <std_srvs::Empty>("body_stiffness/disable");
+  }
+  
+  //! @brief Executes a movement
+  void MotionController::make_movement(
+    std::vector<std::string> joints,
+    std::vector<float> angles,
+    float speed,
+    bool relative
+  )
+  {
+    Joint_a_goal g;
+    g.joint_angles.joint_names = joints;
+    g.joint_angles.joint_angles = angles;
+    g.joint_angles.speed = speed;
+    g.joint_angles.relative = relative;
+    
+    act_client_->sendGoal(g);
+    
+    bool success = act_client_->waitForResult(ros::Duration(30.0));
+  }
+  
+  void MotionController::setStiffness(bool state)
+  {
+    std_srvs::Empty srv;
+    if(state)
+    {
+      if(!stiffness_on_service_client.call(srv))
+      {
+        ROS_ERROR("'Stifness on' service could not be called"); 
+      }
+    }
+    else
+    {
+      if(!stiffness_off_service_client.call(srv))
+      {
+        ROS_ERROR("'Stifness on' service could not be called"); 
+      }
+    }
+  }
+  
+}

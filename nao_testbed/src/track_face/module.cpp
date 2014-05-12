@@ -1,5 +1,5 @@
 /**
-Copyright (c) 2014, Manos Tsardoulias
+Copyright (c) 2014, Manos Tsardoulias, CERTH/ITI
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -9,7 +9,7 @@ modification, are permitted provided that the following conditions are met:
     * Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-    * Neither the name of the <organization> nor the
+    * Neither the name of the CERTH/ITI nor the
       names of its contributors may be used to endorse or promote products
       derived from this software without specific prior written permission.
 
@@ -25,21 +25,47 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef ROS_NAO_UTILITIES_INCLUDES
-#define ROS_NAO_UTILITIES_INCLUDES
+#include "nao_testbed/track_face/module.h"
 
-#include "ros/ros.h"
-#include <dynamic_reconfigure/server.h>
-#include <actionlib/client/simple_action_client.h>
+Module::Module(void)
+{
+  setStiffness(true);
+  speak("Stiffness on");
+}
 
-#include "std_msgs/String.h"
-#include "std_srvs/Empty.h"
+void Module::face_detection_callback(const nao_msgs::FaceDetected& msg)
+{
+  if(face_detection_lock)
+  {
+    return;
+  }
+  face_detection_lock = true;
+  
+  std::vector<std::string> joints;
+  std::vector<float> angles;
+  float speed = 0.5;
+  bool relative = 1;
+  
+  joints.push_back("HeadYaw");
+  joints.push_back("HeadPitch");
+  angles.push_back(msg.face_info.shape_info.alpha.data * 0.4);
+  angles.push_back(msg.face_info.shape_info.beta.data * 0.4);
+  
+  make_movement(joints, angles, speed, relative);
+  
+  face_detection_lock = false;
+}
 
-#include "nao_msgs/Bumper.h"
-#include "nao_msgs/TactileTouch.h"
-#include "nao_msgs/FaceDetected.h"
-#include "nao_msgs/JointAnglesWithSpeedAction.h"
+void Module::tactile_callback(const nao_msgs::TactileTouch& msg)
+{
+  if(msg.state == 0)
+  {
+    return;
+  }
+  if(msg.button == 2)
+  {
+    setStiffness(false);
+    speak("Stiffness off");
+  }
+}
 
-#include <nao_driver/nao_speechConfig.h>
-
-#endif
