@@ -23,10 +23,5 @@
     <arg name="nao_ip" value="$(arg nao_ip)" />
     <arg name="nao_port" value="$(arg nao_port)" />
   </include>
-  
-  <include file="$(find nao_wakeup)/nao_face_detection.launch">
-    <arg name="nao_ip" value="$(arg nao_ip)" />
-    <arg name="nao_port" value="$(arg nao_port)" />
-  </include>
 
 </launch>

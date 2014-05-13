@@ -38,6 +38,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "nao_msgs/Bumper.h"
 #include "nao_msgs/TactileTouch.h"
 #include "nao_msgs/JointAnglesWithSpeedAction.h"
+#include "nao_msgs/SetSpeechVocabularyAction.h"
+#include "nao_msgs/BodyPoseAction.h"
+#include "nao_msgs/WordRecognized.h"
 
 #include "nao_extras_msgs/FaceDetected.h"
 

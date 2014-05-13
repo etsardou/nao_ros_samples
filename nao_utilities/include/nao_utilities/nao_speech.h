@@ -34,6 +34,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //! @brief Namespace for the ROS NAO wrappers
 namespace ros_nao_utils
 {
+  
+  typedef actionlib::SimpleActionClient<nao_msgs::SetSpeechVocabularyAction> 
+    SetSpeechVocabularyActionClient; 
+  typedef nao_msgs::SetSpeechVocabularyGoal SetSpeechVocabularyActionGoal;
+  typedef const nao_msgs::SetSpeechVocabularyResult::ConstPtr& 
+    SetSpeechVocabularyActionResultPtr;
+  
   //! @class Speech
   //! @brief Wrapper for NAO's speech module 
   class Speech
@@ -42,9 +49,16 @@ namespace ros_nao_utils
     
       ros::Publisher speak_pub_;
       
+      SetSpeechVocabularyActionClient *set_voc_act_client_;
+      
       //!< The dynamic reconfigure parameters' server
       dynamic_reconfigure::Server
         <nao_driver::nao_speechConfig> server;
+        
+      ros::ServiceClient start_recognition_service_client_;
+      ros::ServiceClient stop_recognition_service_client_;
+      
+      ros::Subscriber word_recognized_sub_;
     
     public:
     
@@ -53,6 +67,16 @@ namespace ros_nao_utils
       
       //! @brief Makes NAO say the input sentence
       void speak(std::string s);
+      
+      void startRecognition(void);
+      void stopRecognition(void);
+      
+      virtual void wordRecognizedCallback(
+        const nao_msgs::WordRecognized& msg);
+        
+      void setVocabulary(std::vector<std::string> vocabulary);
+      
+      void prompt(std::string word);
   };
 }
 //~ 

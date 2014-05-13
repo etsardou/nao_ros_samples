@@ -34,10 +34,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //! @brief Namespace for the ROS NAO wrappers
 namespace ros_nao_utils
 {
+  //~ https://community.aldebaran-robotics.com/doc/1-14/naoqi/motion/\
+  alrobotposture.html#term-predefined-postures
+  enum NAOPOSE
+  {
+    STAND,
+    STANDINIT,
+    STANDZERO,
+    CROUCH,
+    SIT,
+    SITRELAX,
+    LYINGBELLY,
+    LYINGBACK
+  };
   
   typedef actionlib::SimpleActionClient<nao_msgs::JointAnglesWithSpeedAction> 
-    Joint_a_c; 
-  typedef nao_msgs::JointAnglesWithSpeedGoal Joint_a_goal; 
+    JointAnglesActionClient; 
+  typedef nao_msgs::JointAnglesWithSpeedGoal JointAnglesActionGoal; 
+  
+  typedef actionlib::SimpleActionClient<nao_msgs::BodyPoseAction> 
+    BodyPoseActionClient; 
+  typedef nao_msgs::BodyPoseGoal BodyPoseActionGoal; 
   
   //! @class Bumpers
   //! @brief Wrapper for NAO's bumpers module 
@@ -45,7 +62,8 @@ namespace ros_nao_utils
   {
     protected:
     
-      Joint_a_c *act_client_;
+      JointAnglesActionClient *angles_client_;
+      BodyPoseActionClient *body_pose_client_;
       
       ros::ServiceClient stiffness_on_service_client;
       ros::ServiceClient stiffness_off_service_client;
@@ -64,6 +82,8 @@ namespace ros_nao_utils
       );
       
       void setStiffness(bool state);
+      
+      void setPose(NAOPOSE pose);
   };
 }
 //~ 

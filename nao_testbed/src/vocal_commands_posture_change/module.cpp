@@ -29,54 +29,60 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Module::Module(void)
 {
+  std::vector<std::string> words;
+  words.push_back("yes");
+  words.push_back("no");
+  setVocabulary(words);
+  
+  startRecognition();
 }
-//~ 
-//~ void Module::bumper_callback(const nao_msgs::Bumper& msg)
-//~ {
-  //~ if(bumper_lock)
-  //~ {
-    //~ return;
-  //~ }
-  //~ bumper_lock = true;
-  //~ 
-  //~ std::string foot = msg.bumper == 0 ? "right" : "left";
-  //~ foot += " foot touched";
-  //~ if(msg.state == 1)
-  //~ {
-    //~ speak(foot);
-  //~ }
-  //~ 
-  //~ bumper_lock = false;
-//~ }
-//~ 
-//~ void Module::tactile_callback(const nao_msgs::TactileTouch& msg)
-//~ {
-  //~ if(tactile_lock)
-  //~ {
-    //~ return;
-  //~ }
-  //~ if(msg.state == 0)
-  //~ {
-    //~ return;
-  //~ }
-  //~ 
-  //~ tactile_lock = true;
-  //~ 
-  //~ std::string word = "";
-  //~ switch(msg.button)
-  //~ {
-    //~ case 1: 
-      //~ word = "front";
-      //~ break;
-    //~ case 2:
-      //~ word = "middle";
-      //~ break;
-    //~ case 3:
-      //~ word = "back";
-      //~ break;
-  //~ }
-//~ 
-  //~ speak(word + std::string(" tactile touched"));
-  //~ 
-  //~ tactile_lock = false;
-//~ }
+
+
+void Module::tactile_callback(const nao_msgs::TactileTouch& msg)
+{
+  if(tactile_lock)
+  {
+    return;
+  }
+  if(msg.state == 0)
+  {
+    return;
+  }
+  
+  tactile_lock = true;
+  
+  std::string word = "";
+  switch(msg.button)
+  {
+    case 2: //! Middle
+      stopRecognition();
+      break;
+  }
+
+  tactile_lock = false;
+}
+
+void Module::wordRecognizedCallback(const nao_msgs::WordRecognized& msg)
+{
+  stopRecognition();
+  
+  std::string best_guess = "";
+  float best_guess_val = 0;
+  
+  if(msg.words.size() == 0)
+  {
+    speak("Did not understand. Please repeat.");
+    startRecognition();
+    return;
+  }
+  for(unsigned int i = 0 ; i < msg.words.size() ; i++)
+  {
+    if(msg.confidence_values[i] > best_guess_val)
+    {
+      best_guess_val = msg.confidence_values[i];
+      best_guess = msg.words[i];
+    }
+  }
+  
+  prompt(best_guess);
+}

@@ -2,7 +2,7 @@
 
   <!-- Use CPP node by default for nao_sensors -->
   <arg name="force_python" default="true" />
-  <arg name="nao_ip" default="$(optenv NAO_IP 192.168.0.103)" />
+  <arg name="nao_ip" default="$(optenv NAO_IP 192.168.0.102)" />
   <arg name="nao_port" default="$(optenv NAO_PORT 9559)" />
 
   <include file="$(find nao_wakeup)/nao_full.launch">

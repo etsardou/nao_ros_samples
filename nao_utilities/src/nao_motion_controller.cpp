@@ -36,9 +36,14 @@ namespace ros_nao_utils
     ros::NodeHandle nh_;
     
     ROS_INFO("Initializing the joint_angles action client");
-    act_client_ = new Joint_a_c("joint_angles_action", true);
-    act_client_->waitForServer();
+    angles_client_ = new JointAnglesActionClient("joint_angles_action", true);
+    angles_client_->waitForServer();
     ROS_INFO("Server found! joint_angles action client initialized");
+    
+    ROS_INFO("Initializing the body_pose action client");
+    body_pose_client_ = new BodyPoseActionClient("body_pose", true);
+    body_pose_client_->waitForServer();
+    ROS_INFO("Server found! body_pose action client initialized");
     
     stiffness_on_service_client = nh_.serviceClient
       <std_srvs::Empty>("body_stiffness/enable");
@@ -54,15 +59,15 @@ namespace ros_nao_utils
     bool relative
   )
   {
-    Joint_a_goal g;
+    JointAnglesActionGoal g;
     g.joint_angles.joint_names = joints;
     g.joint_angles.joint_angles = angles;
     g.joint_angles.speed = speed;
     g.joint_angles.relative = relative;
     
-    act_client_->sendGoal(g);
+    angles_client_->sendGoal(g);
     
-    bool success = act_client_->waitForResult(ros::Duration(30.0));
+    bool success = angles_client_->waitForResult(ros::Duration(30.0));
   }
   
   void MotionController::setStiffness(bool state)
@@ -82,6 +87,57 @@ namespace ros_nao_utils
         ROS_ERROR("'Stifness on' service could not be called"); 
       }
     }
+  }
+  
+  void MotionController::setPose(NAOPOSE pose)
+  {
+    BodyPoseActionGoal g;
+    std::string pose_name;
+    switch(pose)
+    {
+      case STAND:
+      {
+        pose_name = "Stand";
+        break;
+      }
+      case STANDINIT:
+      {
+        pose_name = "StandInit";
+      }
+      case STANDZERO:
+      {
+        pose_name = "StandZero";
+      }
+      case CROUCH:
+      {
+        pose_name = "Crouch";
+      }
+      case SIT:
+      {
+        pose_name = "Sit";
+      }
+      case SITRELAX:
+      {
+        pose_name = "SitRelax";
+      }
+      case LYINGBELLY:
+      {
+        pose_name = "LyingBelly";
+      }
+      case LYINGBACK:
+      {
+        pose_name = "LyingBack";
+      }
+      default:
+      {
+        ROS_ERROR("Unknown posture to set");
+      }
+    }
+    g.pose_name = pose_name;
+    
+    body_pose_client_->sendGoal(g);
+    
+    bool success = body_pose_client_->waitForResult(ros::Duration(30.0));
   }
   
 }

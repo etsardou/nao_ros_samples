@@ -42,10 +42,10 @@ class Module :
   public:
     
     Module(void);
-    //~ 
-    //~ virtual void bumper_callback(const nao_msgs::Bumper& msg);
-    //~ virtual void tactile_callback(const nao_msgs::TactileTouch& msg);
-  //~ 
+    
+    virtual void tactile_callback(const nao_msgs::TactileTouch& msg);
+    
+    virtual void wordRecognizedCallback(const nao_msgs::WordRecognized& msg);
 };
 
 #endif
