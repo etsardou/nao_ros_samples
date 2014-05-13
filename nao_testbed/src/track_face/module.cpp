@@ -33,7 +33,8 @@ Module::Module(void)
   speak("Stiffness on");
 }
 
-void Module::face_detection_callback(const nao_msgs::FaceDetected& msg)
+void Module::face_detection_callback(
+  const nao_extras_msgs::FaceDetected& msg)
 {
   if(face_detection_lock)
   {
@@ -48,8 +49,8 @@ void Module::face_detection_callback(const nao_msgs::FaceDetected& msg)
   
   joints.push_back("HeadYaw");
   joints.push_back("HeadPitch");
-  angles.push_back(msg.face_info.shape_info.alpha.data * 0.4);
-  angles.push_back(msg.face_info.shape_info.beta.data * 0.4);
+  angles.push_back(msg.shape_alpha.data * 0.4);
+  angles.push_back(msg.shape_beta.data * 0.4);
   
   make_movement(joints, angles, speed, relative);
   

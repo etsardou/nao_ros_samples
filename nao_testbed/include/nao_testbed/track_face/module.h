@@ -47,7 +47,8 @@ class Module :
     
     Module(void);
     
-    virtual void face_detection_callback(const nao_msgs::FaceDetected& msg);
+    virtual void face_detection_callback(
+      const nao_extras_msgs::FaceDetected& msg);
     
     virtual void tactile_callback(const nao_msgs::TactileTouch& msg);
   

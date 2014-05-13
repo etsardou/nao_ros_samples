@@ -37,8 +37,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "nao_msgs/Bumper.h"
 #include "nao_msgs/TactileTouch.h"
-#include "nao_msgs/FaceDetected.h"
 #include "nao_msgs/JointAnglesWithSpeedAction.h"
+
+#include "nao_extras_msgs/FaceDetected.h"
 
 #include <nao_driver/nao_speechConfig.h>
 

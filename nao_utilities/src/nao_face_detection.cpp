@@ -45,6 +45,6 @@ namespace ros_nao_utils
   }
   
   void FaceDetection::face_detection_callback
-    (const nao_msgs::FaceDetected& msg){}
+    (const nao_extras_msgs::FaceDetected& msg){}
   
 }
