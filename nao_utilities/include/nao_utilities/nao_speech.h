@@ -40,6 +40,12 @@ namespace ros_nao_utils
   typedef nao_msgs::SetSpeechVocabularyGoal SetSpeechVocabularyActionGoal;
   typedef const nao_msgs::SetSpeechVocabularyResult::ConstPtr& 
     SetSpeechVocabularyActionResultPtr;
+    
+  typedef actionlib::SimpleActionClient<nao_msgs::SpeechWithFeedbackAction> 
+    SpeechWithFeedbackActionClient; 
+  typedef nao_msgs::SpeechWithFeedbackGoal SpeechWithFeedbackActionGoal;
+  typedef const nao_msgs::SpeechWithFeedbackResult::ConstPtr& 
+    SpeechWithFeedbackActionResultPtr;
   
   //! @class Speech
   //! @brief Wrapper for NAO's speech module 
@@ -50,6 +56,7 @@ namespace ros_nao_utils
       ros::Publisher speak_pub_;
       
       SetSpeechVocabularyActionClient *set_voc_act_client_;
+      SpeechWithFeedbackActionClient *speech_act_client_;
       
       //!< The dynamic reconfigure parameters' server
       dynamic_reconfigure::Server
@@ -67,6 +74,8 @@ namespace ros_nao_utils
       
       //! @brief Makes NAO say the input sentence
       void speak(std::string s);
+      
+      void speakWithFeedback(std::string s);
       
       void startRecognition(void);
       void stopRecognition(void);

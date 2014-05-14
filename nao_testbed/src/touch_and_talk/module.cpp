@@ -43,7 +43,7 @@ void Module::bumper_callback(const nao_msgs::Bumper& msg)
   foot += " foot touched";
   if(msg.state == 1)
   {
-    speak(foot);
+    speakWithFeedback(foot);
   }
   
   bumper_lock = false;
@@ -76,7 +76,7 @@ void Module::tactile_callback(const nao_msgs::TactileTouch& msg)
       break;
   }
 
-  speak(word + std::string(" tactile touched"));
+  speakWithFeedback(word + std::string(" tactile touched"));
   
   tactile_lock = false;
 }

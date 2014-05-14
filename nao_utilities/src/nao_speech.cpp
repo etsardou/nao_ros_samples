@@ -53,6 +53,12 @@ namespace ros_nao_utils
       new SetSpeechVocabularyActionClient("speech_vocabulary_action", true);
     set_voc_act_client_->waitForServer();
     ROS_INFO("Server found! set speech vocabulary action client initialized");
+    
+    ROS_INFO("Initializing the speech with feedback action client");
+    speech_act_client_ = 
+      new SpeechWithFeedbackActionClient("speech_action", true);
+    speech_act_client_->waitForServer();
+    ROS_INFO("Server found! set speech with feedback action client initialized");
   }
   
   //! @brief Makes NAO say the input sentence
@@ -66,6 +72,26 @@ namespace ros_nao_utils
       return;
     }
     speak_pub_.publish(msg);
+  }
+  
+  //! @brief Makes NAO say the input sentence
+  void Speech::speakWithFeedback(std::string s)
+  {
+    SpeechWithFeedbackActionGoal g;
+    g.say = s;
+    
+    speech_act_client_->sendGoal(g);
+    bool success = speech_act_client_->waitForResult(ros::Duration(30.0));
+    if(!success)
+    {
+      ROS_ERROR("SpeechWithFeedbackAction result timed out");
+    }
+    
+    SpeechWithFeedbackActionResultPtr res = speech_act_client_->getResult();
+    if(!res->finished)
+    {
+      ROS_ERROR("Something went wrong with finishing the sentence.");
+    }
   }
   
   void Speech::startRecognition(void)
