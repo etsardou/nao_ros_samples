@@ -29,11 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Module::Module(void)
 {
-  std::vector<std::string> words;
-  words.push_back("yes");
-  words.push_back("no");
-  setVocabulary(words);
+  commands.push_back("up");
+  commands.push_back("down");
+  setVocabulary(commands);
   
+  state_ = NORMAL;
+  speakWithFeedback("Hello master!");
   startRecognition();
 }
 
@@ -66,12 +67,15 @@ void Module::wordRecognizedCallback(const nao_msgs::WordRecognized& msg)
 {
   stopRecognition();
   
+  static std::string prev_guess = "";
   std::string best_guess = "";
+  
+  //~ Start best word recognition
   float best_guess_val = 0;
   
   if(msg.words.size() == 0)
   {
-    speak("Did not understand. Please repeat.");
+    speakWithFeedback("Did not understand. Please repeat.");
     startRecognition();
     return;
   }
@@ -84,5 +88,51 @@ void Module::wordRecognizedCallback(const nao_msgs::WordRecognized& msg)
     }
   }
   
-  prompt(best_guess);
+  if(state_ == PROMPT && best_guess == "no")
+  {
+    speakWithFeedback("Did not understand. Give me new command.");
+    state_ = NORMAL;
+    setVocabulary(commands);
+    startRecognition();
+    return;
+  }
+  
+  //~ Investigate what to do with this word
+  switch (state_)
+  {
+    case NORMAL:
+    {
+      prev_guess = best_guess;
+      state_ = PROMPT;
+      prompt(best_guess);
+      break;
+    }
+    case PROMPT:
+    {
+      state_ = NORMAL;
+      setVocabulary(commands);
+      serveCommand(prev_guess);
+      prev_guess = "";
+      break;
+    }
+  }
+}
+
+  
+void Module::serveCommand(std::string command)
+{
+  if(command == "up")
+  {
+    setStiffness(true);
+    setPose(ros_nao_utils::STAND, 1.0);
+    speakWithFeedback("I am up");
+    startRecognition();
+  }
+  if(command == "down")
+  {
+    setStiffness(true);
+    setPose(ros_nao_utils::SIT, 1.0);
+    speakWithFeedback("I am down");
+    setStiffness(false);
+  }
 }

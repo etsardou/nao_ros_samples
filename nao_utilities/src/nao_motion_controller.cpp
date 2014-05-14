@@ -41,7 +41,7 @@ namespace ros_nao_utils
     ROS_INFO("Server found! joint_angles action client initialized");
     
     ROS_INFO("Initializing the body_pose action client");
-    body_pose_client_ = new BodyPoseActionClient("body_pose", true);
+    body_pose_client_ = new BodyPoseActionClient("predefined_body_pose", true);
     body_pose_client_->waitForServer();
     ROS_INFO("Server found! body_pose action client initialized");
     
@@ -89,7 +89,7 @@ namespace ros_nao_utils
     }
   }
   
-  void MotionController::setPose(NAOPOSE pose)
+  void MotionController::setPose(NAOPOSE pose, float speed)
   {
     BodyPoseActionGoal g;
     std::string pose_name;
@@ -103,38 +103,46 @@ namespace ros_nao_utils
       case STANDINIT:
       {
         pose_name = "StandInit";
+        break;
       }
       case STANDZERO:
       {
         pose_name = "StandZero";
+        break;
       }
       case CROUCH:
       {
         pose_name = "Crouch";
+        break;
       }
       case SIT:
       {
         pose_name = "Sit";
+        break;
       }
       case SITRELAX:
       {
         pose_name = "SitRelax";
+        break;
       }
       case LYINGBELLY:
       {
         pose_name = "LyingBelly";
+        break;
       }
       case LYINGBACK:
       {
         pose_name = "LyingBack";
+        break;
       }
       default:
       {
         ROS_ERROR("Unknown posture to set");
+        return;
       }
     }
-    g.pose_name = pose_name;
-    
+    g.posture_name = pose_name;
+    g.speed = speed;
     body_pose_client_->sendGoal(g);
     
     bool success = body_pose_client_->waitForResult(ros::Duration(30.0));

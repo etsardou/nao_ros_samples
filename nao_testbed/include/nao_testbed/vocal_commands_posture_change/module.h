@@ -30,14 +30,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <nao_utilities/nao_speech.h>
 #include <nao_utilities/nao_bumpers.h>
+#include <nao_utilities/nao_motion_controller.h>
+
+enum STATE
+{
+  NORMAL,
+  PROMPT
+};
 
 class Module : 
   public ros_nao_utils::Bumpers,
-  public ros_nao_utils::Speech
+  public ros_nao_utils::Speech,
+  public ros_nao_utils::MotionController
 {
   private:
     
     ros::NodeHandle nh_;
+    
+    STATE state_;
+    
+    std::vector<std::string> commands;
+    
+    void serveCommand(std::string command);
     
   public:
     

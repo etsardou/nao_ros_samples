@@ -141,7 +141,7 @@ namespace ros_nao_utils
     vocabulary.push_back("no");
     vocabulary.push_back("yes");
     setVocabulary(vocabulary);
-    speak(std::string("Did you say ") + word + std::string("?"));
+    speakWithFeedback(std::string("Did you say ") + word + std::string(" ?"));
     startRecognition();
   }
 }

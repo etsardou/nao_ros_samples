@@ -30,7 +30,7 @@
   <node pkg="nao_driver" type="nao_speech.py" name="nao_speech" args="--pip=$(arg nao_ip) --pport=$(arg nao_port)" output="screen"/>
   <node pkg="nao_driver" type="nao_tactile.py" name="nao_tactile" args="--pip=$(arg nao_ip) --pport=$(arg nao_port)" />
   
-  <node pkg="nao_pose" type="pose_manager.py" name="pose_manager">
+  <node pkg="nao_pose" type="pose_manager.py" name="pose_manager" args="--pip=$(arg nao_ip) --pport=$(arg nao_port)" output="screen">
     <rosparam file="$(find nao_pose)/config/basic_poses.yaml" command="load" ns="poses" />
     <!-- You can define here a path to a Choregraphe posture library (XAP file). -->
     <param name="xap" value="$(find nao_pose)/config/basic.xap" />

@@ -52,9 +52,9 @@ namespace ros_nao_utils
     JointAnglesActionClient; 
   typedef nao_msgs::JointAnglesWithSpeedGoal JointAnglesActionGoal; 
   
-  typedef actionlib::SimpleActionClient<nao_msgs::BodyPoseAction> 
+  typedef actionlib::SimpleActionClient<nao_msgs::PredefinedBodyPoseAction> 
     BodyPoseActionClient; 
-  typedef nao_msgs::BodyPoseGoal BodyPoseActionGoal; 
+  typedef nao_msgs::PredefinedBodyPoseGoal BodyPoseActionGoal; 
   
   //! @class Bumpers
   //! @brief Wrapper for NAO's bumpers module 
@@ -83,7 +83,7 @@ namespace ros_nao_utils
       
       void setStiffness(bool state);
       
-      void setPose(NAOPOSE pose);
+      void setPose(NAOPOSE pose, float speed);
   };
 }
 //~ 
