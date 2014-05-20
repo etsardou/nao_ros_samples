@@ -52,9 +52,9 @@ namespace ros_nao_utils
     JointAnglesActionClient; 
   typedef nao_msgs::JointAnglesWithSpeedGoal JointAnglesActionGoal; 
   
-  typedef actionlib::SimpleActionClient<nao_msgs::PredefinedBodyPoseAction> 
+  typedef actionlib::SimpleActionClient<nao_msgs::BodyPoseWithSpeedAction> 
     BodyPoseActionClient; 
-  typedef nao_msgs::PredefinedBodyPoseGoal BodyPoseActionGoal; 
+  typedef nao_msgs::BodyPoseWithSpeedGoal BodyPoseActionGoal; 
   
   //! @class Bumpers
   //! @brief Wrapper for NAO's bumpers module 

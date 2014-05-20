@@ -51,7 +51,7 @@ namespace ros_nao_utils
 
       //! @brief Virtual callback for the face detection event
       virtual void face_detection_callback(
-        const nao_extras_msgs::FaceDetected& msg);
+        const nao_interaction_msgs::FaceDetected& msg);
   };
 }
 //~ 

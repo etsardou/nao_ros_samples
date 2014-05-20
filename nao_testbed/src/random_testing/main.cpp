@@ -25,26 +25,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "nao_utilities/nao_face_detection.h"
+#include "nao_testbed/random_testing/module.h"
 
-namespace ros_nao_utils
+int main(int argc, char **argv)
 {
-  //! @brief 
-  FaceDetection::FaceDetection(void)
-  {
-    //~ Subscription to /faces_detected topic
-    ros::NodeHandle nh_;
-    
-    face_detection_lock = false;
-    
-    face_detection_sub_ = nh_.subscribe(
-      "faces_detected", 
-      1, 
-      &FaceDetection::face_detection_callback,
-      this);
-  }
-  
-  void FaceDetection::face_detection_callback
-    (const nao_interaction_msgs::FaceDetected& msg){}
-  
+  ros::init(argc, argv, "touch_and_talk");
+
+  Module m;
+
+  ros::spin();
+  return 0;
 }

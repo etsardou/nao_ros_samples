@@ -41,7 +41,7 @@ namespace ros_nao_utils
     ROS_INFO("Server found! joint_angles action client initialized");
     
     ROS_INFO("Initializing the body_pose action client");
-    body_pose_client_ = new BodyPoseActionClient("predefined_body_pose", true);
+    body_pose_client_ = new BodyPoseActionClient("body_pose_naoqi", true);
     body_pose_client_->waitForServer();
     ROS_INFO("Server found! body_pose action client initialized");
     

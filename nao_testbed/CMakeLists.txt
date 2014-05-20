@@ -23,6 +23,19 @@ catkin_package(
     nao_utilities
 )
 
+#---------------------------Random testing module-----------------------------#
+add_executable(nao_testbed_random_testing
+  src/random_testing/main.cpp
+  src/random_testing/module.cpp
+)
+add_dependencies(nao_testbed_random_testing 
+  nao_msgs_gencpp # wait for nao_msgs to be build
+  nao_utilities_gencpp # wait for nao_utilities to be build
+) 
+target_link_libraries(nao_testbed_random_testing 
+  ${catkin_LIBRARIES}
+  nao_utilities_lib 
+)
 #---------------------------Touch and talk module-----------------------------#
 add_executable(nao_testbed_touch_and_talk
   src/touch_and_talk/main.cpp

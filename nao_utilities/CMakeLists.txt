@@ -7,6 +7,7 @@ find_package(catkin
     roscpp
     actionlib
     nao_msgs
+    nao_interaction_msgs
     nao_driver
     dynamic_reconfigure
 )
@@ -24,6 +25,7 @@ catkin_package(
     roscpp
     actionlib
     nao_msgs
+    nao_interaction_msgs
     nao_driver
     dynamic_reconfigure
     
@@ -42,6 +44,7 @@ add_library(nao_utilities_lib
 
 add_dependencies(nao_utilities_lib 
   nao_msgs_gencpp # wait for nao_msgs to be build
+  nao_interaction_msgs_gencpp # wait for nao_msgs to be build
   nao_driver_gencfg
 ) 
 

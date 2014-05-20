@@ -34,7 +34,7 @@ Module::Module(void)
 }
 
 void Module::face_detection_callback(
-  const nao_extras_msgs::FaceDetected& msg)
+  const nao_interaction_msgs::FaceDetected& msg)
 {
   if(face_detection_lock)
   {

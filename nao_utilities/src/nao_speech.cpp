@@ -86,12 +86,6 @@ namespace ros_nao_utils
     {
       ROS_ERROR("SpeechWithFeedbackAction result timed out");
     }
-    
-    SpeechWithFeedbackActionResultPtr res = speech_act_client_->getResult();
-    if(!res->finished)
-    {
-      ROS_ERROR("Something went wrong with finishing the sentence.");
-    }
   }
   
   void Speech::startRecognition(void)

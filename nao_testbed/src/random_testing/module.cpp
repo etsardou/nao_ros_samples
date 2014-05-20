@@ -25,26 +25,58 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "nao_utilities/nao_face_detection.h"
+#include "nao_testbed/random_testing/module.h"
 
-namespace ros_nao_utils
+Module::Module(void)
 {
-  //! @brief 
-  FaceDetection::FaceDetection(void)
+}
+
+void Module::bumper_callback(const nao_msgs::Bumper& msg)
+{
+  if(bumper_lock)
   {
-    //~ Subscription to /faces_detected topic
-    ros::NodeHandle nh_;
-    
-    face_detection_lock = false;
-    
-    face_detection_sub_ = nh_.subscribe(
-      "faces_detected", 
-      1, 
-      &FaceDetection::face_detection_callback,
-      this);
+    return;
+  }
+  bumper_lock = true;
+  
+  std::string foot = msg.bumper == 0 ? "right" : "left";
+  foot += " foot touched";
+  if(msg.state == 1)
+  {
+    speakWithFeedback(foot);
   }
   
-  void FaceDetection::face_detection_callback
-    (const nao_interaction_msgs::FaceDetected& msg){}
+  bumper_lock = false;
+}
+
+void Module::tactile_callback(const nao_msgs::TactileTouch& msg)
+{
+  if(tactile_lock)
+  {
+    return;
+  }
+  if(msg.state == 0)
+  {
+    return;
+  }
   
+  tactile_lock = true;
+  
+  std::string word = "";
+  switch(msg.button)
+  {
+    case 1: 
+      word = "front";
+      break;
+    case 2:
+      word = "middle";
+      break;
+    case 3:
+      word = "back";
+      break;
+  }
+
+  speakWithFeedback(word + std::string(" tactile touched"));
+  
+  tactile_lock = false;
 }

@@ -5,6 +5,6 @@
   <arg name="nao_ip" default="$(optenv NAO_IP 192.168.0.102)" />
   <arg name="nao_port" default="$(optenv NAO_PORT 9559)" />
     
-  <node pkg="nao_driver" type="nao_speech.py" name="nao_speech" args="--pip=$(arg nao_ip) --pport=$(arg nao_port)"/>
+  <node pkg="nao_driver" type="nao_speech.py" name="nao_speech" args="--pip=$(arg nao_ip) --pport=$(arg nao_port)" output="screen"/>
 
 </launch>
